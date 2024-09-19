@@ -1,4 +1,4 @@
-import * as React from "react"
+/*import * as React from "react"
 
 const pageStyles = {
   color: "#232129",
@@ -170,7 +170,98 @@ const IndexPage = () => {
     </main>
   )
 }
+*/
+//export default IndexPage
 
-export default IndexPage
+//export const Head = () => <title>Home Page</title>
 
-export const Head = () => <title>Home Page</title>
+// src/pages/index.js (ou tout autre composant)
+/*
+import React from "react";
+import { graphql } from "gatsby";
+
+const IndexPage = ({ data }) => {
+  const posts = data.allWordpressPost.nodes;
+
+  return (
+    <div>
+      <h1>Articles WordPress</h1>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export const query = graphql`
+  query {
+    allWordpressPost {
+      nodes {
+        id
+        title
+      }
+    }
+  }
+`;
+
+export default IndexPage;
+
+*/
+/*
+import React from "react"
+import { graphql } from "gatsby"
+import Layout from "../components/layout"
+import SEO from "../components/seo"
+
+export default ({ data }) => {
+  return (
+    <Layout>
+      <SEO title="home" />
+      <h4>Posts</h4>
+      {data.allWordpressPost.edges.map(({ node }) => (
+        <div>
+          <p>{node.title}</p>
+          <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+        </div>
+      ))}
+    </Layout>
+  )
+}
+export const pageQuery = graphql`
+  query {
+    allWordpressPost(sort: { fields: [date] }) {
+      edges {
+        node {
+          title
+          excerpt
+        }
+      }
+    }
+  */
+    import * as React from 'react'
+    import Layout from '../../component/Layout'
+    import { graphql } from 'gatsby'
+    
+    const BlogPost = ({ data, children }) => {
+      return (
+        <Layout pageTitle={data.mdx.frontmatter.title}>
+          <p>{data.mdx.frontmatter.date}</p>
+          {children}
+        </Layout>
+      )
+    }
+    
+    export const query = graphql`
+      query ($id: String) {
+        mdx(id: {eq: $id}) {
+          frontmatter {
+            title
+            date(formatString: "MMMM D, YYYY")
+          }
+        }
+      }
+    `
+    
+    export default BlogPost
